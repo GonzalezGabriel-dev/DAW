@@ -1,0 +1,25 @@
+body{
+    background-color: aliceblue;
+}
+.container{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.altoA{
+    height: 600px;
+}
+.altoB{
+    height: 200px;
+}
+.altoC{
+    height: 400px;
+}
+.altoE{
+    height: 90px;
+}
+.altoF{
+    height: 150px;
+}
+.altoA{}
+.altoA{}
+.altoA{}
