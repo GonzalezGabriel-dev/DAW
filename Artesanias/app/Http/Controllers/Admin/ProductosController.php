@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Validator as IlluminateValidationValidator;
+use Validator;
 
 class ProductosController extends Controller
 {
@@ -24,7 +27,7 @@ class ProductosController extends Controller
      */
     public function create()
     {
-        dd("hola");
+        
     }
 
     /**
@@ -35,7 +38,20 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator=Validator::make($request->all(),[
+            'nombre'=>'required|max:255|min:1',
+            'descripcion'=>'required|max:255|min:1',
+            'stock'=>'required|max:255|min:1|numeric',
+            'precio'=>'required|max:255|min:1|numeric',
+        ]);
+        if($validator->fails()){
+            return back()
+            ->withInput()
+            ->with('errorInsertar','Favor de llenar todos los campos')
+            ->withErrors('Favor de llenar los campos');
+        }else{
+            dd("Todo Bien");
+        }
     }
 
     /**
