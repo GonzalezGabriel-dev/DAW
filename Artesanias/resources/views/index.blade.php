@@ -7,6 +7,7 @@
     <title>Inicio</title>
     <link rel="stylesheet" href="{{ asset('/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/estilos.css') }}">
+
 </head>
 <body>
         <!--NavBar-->
@@ -187,5 +188,6 @@
 
       <!--Scripts-->
     <script src="{{ asset('/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    
 </body>
 </html>

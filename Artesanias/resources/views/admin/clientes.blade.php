@@ -1,67 +1,92 @@
 @extends('admin.layouts.main')
+
 @section('contenido')
-    <div class="content-header">
+<div class="content-header">
         <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1 class="m-0">Productos</h1>
+            <h1 class="m-0">Clientes</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item">
+                    <a class="btn btn-outline-primary btn-sm" target="_blank" href="/admin/generarPDF">
+                       <i class="fa fa-print"></i> Imprimir Datos</a>
+                </li>
                 <li class="breadcrumb-item">
                     <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal-add">
-                       <i class="fa fa-plus"></i> Agregar Productos</button>
+                       <i class="fa fa-plus"></i> Agregar Cliente</button>
                 </li>
             </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
-    <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-        @if($message=Session::get('Listo'))
+
+       <div class="content">
+      <div class="container-fluid"> 
+          <div class="row">
+          @if($message=Session::get('Listo'))
                 <div class="alert alert-success alert-dismissable fade show col-12" role="alert">
-                  <h5>Listo:</h5>
-                  <p>{{$message}}</p>
+                  <h5>Listo</h5>
+                 <p>{{$message}}</p>
                 </div>
-          @endif
-          <table class="table">
-            <thead>
+
+              @endif
+
+              <table class="table">
+
+              <thead>
               <tr>
-                <th>Imagen</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th>Tags</th>
-                <th></th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>City</th>
               </tr>
-            </thead>
-            <tbody>
-              @foreach($productos as $p)
-              <tr>
-                <td><img src="{{asset('img/productos/'.$p->image)}}" alt="" width="70px" height="70px"></td>
-                <td>{{$p->name}}</td>
-                <td>{{$p->description}}</td>
-                <td>{{$p->price}}</td>
-                <td>{{$p->stock}}</td>
-                <td>{{$p->tags}}</td>
-                <td><button class="btn btn-danger btn-eliminar" data-id="{{$p->id}}" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></button>
-                <button class="btn btn-primary btn-editar" data-id="{{$p->id}}" data-nombre="{{$p->name}}" data-descripcion="{{$p->description}}" data-price="{{$p->price}}" data-stock="{{$p->stock}}" data-tags="{{$p->tags}}" data-toggle="modal" data-target="#modal-edit"><i class="fa fa-edit"></i></button>
-                <form action="{{ url('/admin/productos',['id'=>$p->id])}}" method="POST" id="formEliminar_{{ $p->id}}">
+              </thead>
+              <tbody>
+              @foreach($datos as $p)
+               <tr>
+                 <td>{{ $p->name }}</td>
+                 <td>{{ $p->email }}</td>
+                 <td>{{ $p->address }}</td>
+                 <td>{{ $p->city }}</td>
+                 <td>
+                 <button class="btn btn-danger btn-eliminar" data-id="{{$p->id}}" 
+                 data-toggle="modal" data-target="#modal-delete"
+                 >
+                 <i class = "fa fa-trash"></i>
+                 
+                 </button>
+                 <button class="btn btn-primary btn-editar" data-id="{{$p->id}}" 
+
+                  data-toggle="modal" data-target="#modal-edit">
+                  <i class="fa fa-edit"></i>
+                  </button>
+                 <form action="{{ url('/admin/clientes',['id'=>$p->id])}}" method="POST" id="formEliminar_{{ $p->id}}">
                 @csrf
                 <input type="hidden" name="id" value="{{$p->id}}">
                 <input type="hidden" name="_method" value="delete">
                 </form>
-                </td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
+                 </td>
+
+               </tr>
+               @endforeach
+              </tbody>
+              <th>
+             
+              
+              </table>
+            
+          </div>
       </div>
-    </div>
+
+
+           </div>
+
+
+           
+            
     <!--Modal Editar-->
     <div class="modal fade" id="modal-edit">
         <div class="modal-dialog">
@@ -219,8 +244,9 @@
       $(".btn-eliminar").click(function(){
         var id=$(this).data('id');
         idEliminar=id;
-      })
+      });
       $(".btn-editar").click(function(){
+        console.log("11111111");
         var id=$(this).data('id');
         var name=$(this).data('nombre');
         var description=$(this).data('descripcion');
@@ -233,10 +259,10 @@
         $("#priceEdit").val(precio);
         $("#stockEdit").val(stock);
         $("#tagsEdit").val(tags);
-      })
+      });
       $(".btnCloseEliminar").click(function(){
-        console.log("Funciona");
-        //$("#formEliminar_"+idEliminar).submit();
+        console.log(idEliminar);
+        $("#formEliminar_"+idEliminar).submit();
       });
     });
   </script>
